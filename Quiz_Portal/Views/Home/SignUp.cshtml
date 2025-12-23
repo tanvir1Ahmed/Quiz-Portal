@@ -1,0 +1,117 @@
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+<div class="container py-3 py-md-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5">
+            <div class="text-center mb-4">
+                <i class="fas fa-user-plus text-success" style="font-size: 3rem;"></i>
+                <h2 class="mt-2 fw-bold">Create Account</h2>
+                <p class="text-muted small">Join Bangladesh Quiz Portal</p>
+            </div>
+
+            <div class="card shadow border-0">
+                <div class="card-body p-4">
+                    <form id="signupForm" onsubmit="handleSignup(event)">
+                        <div class="mb-3">
+                            <label for="signupName" class="form-label fw-semibold">Full Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input type="text" class="form-control form-control-lg" id="signupName" 
+                                       placeholder="Enter your full name" required minlength="2" maxlength="100"
+                                       autocomplete="name" inputmode="text">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="signupPhone" class="form-label fw-semibold">Phone Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-success text-white fw-bold">+880</span>
+                                <input type="tel" class="form-control form-control-lg" id="signupPhone" 
+                                       placeholder="1XXXXXXXXX" required pattern="^\d{10}$" maxlength="10"
+                                       autocomplete="tel" inputmode="numeric">
+                            </div>
+                            <div class="form-text small">Enter 10 digit phone number</div>
+                        </div>
+                        <div id="signupError" class="alert alert-danger d-none py-2"></div>
+                        <div id="signupSuccess" class="alert alert-success d-none py-2"></div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg" id="signupBtn">
+                                <i class="fas fa-user-plus me-2"></i>Sign Up
+                            </button>
+                        </div>
+                    </form>
+                    <hr class="my-3">
+                    <div class="text-center">
+                        <p class="mb-0 small">Already have an account? <a href="/Home/Login" class="text-success fw-semibold">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('quizUser') || 'null');
+            if (user) {
+                window.location.href = '/Home/Quiz';
+            }
+        });
+
+        async function handleSignup(event) {
+            event.preventDefault();
+            
+            const nameInput = document.getElementById('signupName');
+            const phoneInput = document.getElementById('signupPhone');
+            const signupBtn = document.getElementById('signupBtn');
+            const signupError = document.getElementById('signupError');
+            const signupSuccess = document.getElementById('signupSuccess');
+
+            if (!nameInput || !phoneInput) {
+                console.error('Form elements not found');
+                return;
+            }
+
+            const name = nameInput.value.trim();
+            const phoneNumber = phoneInput.value.trim();
+            
+            signupError.classList.add('d-none');
+            signupSuccess.classList.add('d-none');
+            signupBtn.disabled = true;
+            signupBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Please wait...';
+
+            try {
+                const response = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, phoneNumber })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    signupSuccess.innerHTML = '<i class="fas fa-check-circle me-2"></i>' + data.message + ' Redirecting to login...';
+                    signupSuccess.classList.remove('d-none');
+                    setTimeout(() => {
+                        window.location.href = '/Home/Login';
+                    }, 2000);
+                } else {
+                    signupError.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>' + (data.message || 'Registration failed. Please try again.');
+                    signupError.classList.remove('d-none');
+                    signupBtn.disabled = false;
+                    signupBtn.innerHTML = '<i class="fas fa-user-plus me-2"></i>Sign Up';
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                signupError.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>An error occurred. Please try again.';
+                signupError.classList.remove('d-none');
+                signupBtn.disabled = false;
+                signupBtn.innerHTML = '<i class="fas fa-user-plus me-2"></i>Sign Up';
+            }
+        }
+    </script>
+}

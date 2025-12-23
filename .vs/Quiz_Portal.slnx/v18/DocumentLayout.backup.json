@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Md. Tanvir Ahmed\\Quiz Portal\\Quiz_Portal\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8A63311F-8E8D-5581-9235-D8F7414A0CA1}|Quiz_Portal\\Quiz_Portal.csproj|d:\\md. tanvir ahmed\\quiz portal\\quiz_portal\\quiz_portal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8A63311F-8E8D-5581-9235-D8F7414A0CA1}|Quiz_Portal\\Quiz_Portal.csproj|solutionrelative:quiz_portal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A63311F-8E8D-5581-9235-D8F7414A0CA1}|Quiz_Portal\\Quiz_Portal.csproj|d:\\md. tanvir ahmed\\quiz portal\\quiz_portal\\quiz_portal\\views\\home\\leaderboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8A63311F-8E8D-5581-9235-D8F7414A0CA1}|Quiz_Portal\\Quiz_Portal.csproj|solutionrelative:quiz_portal\\views\\home\\leaderboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A63311F-8E8D-5581-9235-D8F7414A0CA1}|Quiz_Portal\\Quiz_Portal.csproj|d:\\md. tanvir ahmed\\quiz portal\\quiz_portal\\quiz_portal\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A63311F-8E8D-5581-9235-D8F7414A0CA1}|Quiz_Portal\\Quiz_Portal.csproj|solutionrelative:quiz_portal\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Leaderboard.cshtml",
+              "DocumentMoniker": "D:\\Md. Tanvir Ahmed\\Quiz Portal\\Quiz_Portal\\Quiz_Portal\\Views\\Home\\Leaderboard.cshtml",
+              "RelativeDocumentMoniker": "Quiz_Portal\\Views\\Home\\Leaderboard.cshtml",
+              "ToolTip": "D:\\Md. Tanvir Ahmed\\Quiz Portal\\Quiz_Portal\\Quiz_Portal\\Views\\Home\\Leaderboard.cshtml",
+              "RelativeToolTip": "Quiz_Portal\\Views\\Home\\Leaderboard.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-17T11:28:47.065Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Md. Tanvir Ahmed\\Quiz Portal\\Quiz_Portal\\Quiz_Portal\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Quiz_Portal\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Md. Tanvir Ahmed\\Quiz Portal\\Quiz_Portal\\Quiz_Portal\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Quiz_Portal\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-17T11:28:43.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\Md. Tanvir Ahmed\\Quiz Portal\\Quiz_Portal\\Quiz_Portal\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Quiz_Portal\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\Md. Tanvir Ahmed\\Quiz Portal\\Quiz_Portal\\Quiz_Portal\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Quiz_Portal\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAIwC0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T09:16:41.872Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

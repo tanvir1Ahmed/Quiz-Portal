@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#198754">
+    <title>@ViewData["Title"] - Bangladesh Quiz Portal</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Quiz_Portal.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top">
+            <div class="container-fluid px-3">
+                <a class="navbar-brand fw-bold d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-flag me-2"></i><span>BD Quiz</span>
+                </a>
+                <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav flex-grow-1 py-2 py-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link rounded-3 mb-1 mb-lg-0" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-2"></i>Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link rounded-3 mb-1 mb-lg-0" asp-area="" asp-controller="Home" asp-action="Quiz">
+                                <i class="fas fa-question-circle me-2"></i>Quiz
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link rounded-3 mb-1 mb-lg-0" asp-area="" asp-controller="Home" asp-action="Leaderboard">
+                                <i class="fas fa-trophy me-2"></i>Leaderboard
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav border-top border-light border-opacity-25 pt-2 mt-2 pt-lg-0 mt-lg-0 border-lg-0">
+                        <li class="nav-item" id="userInfo" style="display: none;">
+                            <span class="nav-link">
+                                <i class="fas fa-user-circle me-2"></i><span id="userName"></span>
+                            </span>
+                        </li>
+                        <li class="nav-item" id="logoutBtn" style="display: none;">
+                            <a class="nav-link rounded-3 text-warning" href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a>
+                        </li>
+                        <li class="nav-item" id="signupLink">
+                            <a class="nav-link rounded-3 mb-1 mb-lg-0" asp-area="" asp-controller="Home" asp-action="SignUp">
+                                <i class="fas fa-user-plus me-2"></i>Sign Up
+                            </a>
+                        </li>
+                        <li class="nav-item" id="loginLink">
+                            <a class="nav-link rounded-3" asp-area="" asp-controller="Home" asp-action="Login">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted mt-2">
+        <div class="container text-center py-1">
+            <p class="mb-0" style="font-size: 0.7rem;">&copy; 2025 - BD Quiz</p>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Check if user is logged in
+        function checkUserLogin() {
+            const user = JSON.parse(localStorage.getItem('quizUser') || 'null');
+            if (user) {
+                document.getElementById('userInfo').style.display = 'block';
+                document.getElementById('logoutBtn').style.display = 'block';
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('signupLink').style.display = 'none';
+                document.getElementById('loginLink').style.display = 'none';
+            } else {
+                document.getElementById('userInfo').style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'none';
+                document.getElementById('signupLink').style.display = 'block';
+                document.getElementById('loginLink').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('quizUser');
+            window.location.href = '/';
+        }
+
+        document.addEventListener('DOMContentLoaded', checkUserLogin);
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

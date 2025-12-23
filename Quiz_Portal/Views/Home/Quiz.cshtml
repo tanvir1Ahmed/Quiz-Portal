@@ -1,0 +1,770 @@
+@{
+    ViewData["Title"] = "Quiz";
+}
+
+<style>
+    .quiz-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem;
+    }
+
+    .question-card {
+        max-width: 100%;
+        width: 100%;
+        animation: slideIn 0.4s ease-out;
+    }
+
+    @@keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    @@keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-8px); }
+        75% { transform: translateX(8px); }
+    }
+
+    @@keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+    }
+
+    @@keyframes confetti-fall {
+        0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    .timer-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: bold;
+        margin: 0 auto 15px;
+        transition: all 0.3s ease;
+    }
+
+    .timer-normal {
+        background: linear-gradient(135deg, #198754, #20c997);
+        color: white;
+    }
+
+    .timer-warning {
+        background: linear-gradient(135deg, #ffc107, #fd7e14);
+        color: white;
+        animation: pulse 0.5s infinite;
+    }
+
+    .timer-danger {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+        animation: shake 0.3s infinite;
+    }
+
+    .option-btn {
+        width: 100%;
+        padding: 16px 14px;
+        margin: 8px 0;
+        border: 2px solid #dee2e6;
+        border-radius: 12px;
+        background: white;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: left;
+        min-height: 56px;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .option-btn:active:not(:disabled) {
+        transform: scale(0.98);
+        border-color: #198754;
+        background: #f0fff4;
+    }
+
+    .option-btn:disabled {
+        cursor: not-allowed;
+    }
+
+    .option-correct {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb) !important;
+        border-color: #198754 !important;
+        animation: pulse 0.5s ease;
+    }
+
+    .option-wrong {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb) !important;
+        border-color: #dc3545 !important;
+        animation: shake 0.5s ease;
+    }
+
+    .feedback-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1050;
+        animation: fadeIn 0.2s ease;
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .feedback-correct {
+        background: rgba(25, 135, 84, 0.95);
+    }
+
+    .feedback-wrong {
+        background: rgba(220, 53, 69, 0.95);
+    }
+
+    .feedback-timeout {
+        background: rgba(255, 193, 7, 0.95);
+    }
+
+    .feedback-content {
+        text-align: center;
+        color: white;
+        animation: bounce 0.5s ease;
+        padding: 20px;
+    }
+
+    .feedback-icon {
+        font-size: 4rem;
+        margin-bottom: 15px;
+    }
+
+    .feedback-text {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .feedback-subtext {
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+
+    .score-display {
+        background: linear-gradient(135deg, #198754, #20c997);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .streak-badge {
+        background: linear-gradient(135deg, #ffc107, #fd7e14);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        animation: pulse 1s infinite;
+    }
+
+    .progress-dots {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 12px 0;
+        padding: 0 10px;
+    }
+
+    .progress-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #dee2e6;
+        transition: all 0.3s ease;
+    }
+
+    .progress-dot.correct {
+        background: #198754;
+    }
+
+    .progress-dot.wrong {
+        background: #dc3545;
+    }
+
+    .progress-dot.current {
+        background: #ffc107;
+        animation: pulse 1s infinite;
+        transform: scale(1.2);
+    }
+
+    .progress-dot.skipped {
+        background: #6c757d;
+    }
+
+    .start-screen {
+        text-align: center;
+        animation: fadeIn 0.5s ease;
+        padding: 20px;
+    }
+
+    .start-icon {
+        font-size: 3.5rem;
+        color: #198754;
+        margin-bottom: 15px;
+        animation: bounce 2s infinite;
+    }
+
+    .confetti-piece {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        animation: confetti-fall 2s linear forwards;
+        pointer-events: none;
+    }
+
+    /* Mobile-specific styles */
+    @@media (max-width: 576px) {
+        .timer-circle {
+            width: 70px;
+            height: 70px;
+            font-size: 1.75rem;
+        }
+        
+        .feedback-icon {
+            font-size: 3rem;
+        }
+        
+        .feedback-text {
+            font-size: 1.25rem;
+        }
+        
+        .option-btn {
+            padding: 14px 12px;
+            font-size: 0.95rem;
+        }
+        
+        .question-text {
+            font-size: 1.1rem !important;
+        }
+        
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+        }
+        
+        .card-body {
+            padding: 1rem !important;
+        }
+    }
+</style>
+
+<div class="container py-2 py-md-4">
+    <!-- Login Required Alert -->
+    <div id="loginRequired" class="row justify-content-center d-none">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="alert alert-warning text-center p-4">
+                <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                <h5>Login Required</h5>
+                <p class="small mb-3">Please login to take the quiz.</p>
+                <a href="/" class="btn btn-success">
+                    <i class="fas fa-sign-in-alt me-2"></i>Go to Login
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="startScreen" class="quiz-container d-none">
+        <div class="start-screen">
+            <div class="start-icon">
+                <i class="fas fa-flag"></i>
+            </div>
+            <h1 class="fw-bold text-success mb-2" style="font-size: 1.5rem;">🇧🇩 Bangladesh Quiz</h1>
+            <p class="text-muted mb-3">Test your knowledge with 20 questions!</p>
+            <div class="mb-4 d-flex flex-wrap justify-content-center gap-2">
+                <span class="badge bg-warning text-dark p-2">
+                    <i class="fas fa-clock me-1"></i>10s per question
+                </span>
+                <span class="badge bg-info text-white p-2">
+                    <i class="fas fa-trophy me-1"></i>Compete & win
+                </span>
+            </div>
+            <button class="btn btn-success btn-lg px-4 py-3" onclick="startQuiz()">
+                <i class="fas fa-play me-2"></i>Start Quiz
+            </button>
+        </div>
+    </div>
+
+    <!-- Quiz Container -->
+    <div id="quizContainer" class="quiz-container d-none">
+        <div class="question-card card shadow border-0">
+            <div class="card-body p-3 p-md-4">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="score-display">
+                        <i class="fas fa-star me-1"></i><span id="currentScore">0</span>
+                    </div>
+                    <div id="streakBadge" class="streak-badge d-none">
+                        <i class="fas fa-fire me-1"></i><span id="streakCount">0</span>🔥
+                    </div>
+                </div>
+
+                <!-- Timer -->
+                <div class="timer-circle timer-normal" id="timerCircle">
+                    <span id="questionTimer">10</span>
+                </div>
+
+                <!-- Question Number -->
+                <div class="text-center mb-2">
+                    <span class="badge bg-secondary" id="questionNumber">Question 1 of 20</span>
+                </div>
+
+                <!-- Progress Dots -->
+                <div class="progress-dots" id="progressDots"></div>
+
+                <!-- Question -->
+                <div class="text-center mb-3">
+                    <h5 id="questionText" class="fw-bold question-text"></h5>
+                </div>
+
+                <!-- Options -->
+                <div id="optionsContainer">
+                    <button class="option-btn" id="optionA" onclick="selectAnswer('A')">
+                        <strong>A)</strong> <span id="optionAText"></span>
+                    </button>
+                    <button class="option-btn" id="optionB" onclick="selectAnswer('B')">
+                        <strong>B)</strong> <span id="optionBText"></span>
+                    </button>
+                    <button class="option-btn" id="optionC" onclick="selectAnswer('C')">
+                        <strong>C)</strong> <span id="optionCText"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Overlay -->
+    <div id="feedbackOverlay" class="feedback-overlay d-none">
+        <div class="feedback-content">
+            <div class="feedback-icon" id="feedbackIcon"></div>
+            <div class="feedback-text" id="feedbackText"></div>
+            <div class="feedback-subtext" id="feedbackSubtext"></div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div class="modal fade" id="resultModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-success text-white py-2">
+                    <h6 class="modal-title"><i class="fas fa-trophy me-2"></i>Quiz Complete!</h6>
+                </div>
+                <div class="modal-body text-center p-3 p-md-4">
+                    <div id="resultIcon" class="mb-2"></div>
+                    <h1 id="resultScore" class="display-4 fw-bold text-success mb-1"></h1>
+                    <p class="text-muted">out of 20 correct</p>
+                    <div class="row g-2 mt-3">
+                        <div class="col-4">
+                            <div class="p-2 bg-light rounded">
+                                <i class="fas fa-check-circle text-success fa-lg mb-1"></i>
+                                <h5 id="correctCount" class="mb-0">0</h5>
+                                <small class="text-muted" style="font-size: 0.7rem;">Correct</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 bg-light rounded">
+                                <i class="fas fa-times-circle text-danger fa-lg mb-1"></i>
+                                <h5 id="wrongCount" class="mb-0">0</h5>
+                                <small class="text-muted" style="font-size: 0.7rem;">Wrong</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 bg-light rounded">
+                                <i class="fas fa-clock text-warning fa-lg mb-1"></i>
+                                <h5 id="timeoutCount" class="mb-0">0</h5>
+                                <small class="text-muted" style="font-size: 0.7rem;">Timeout</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-info mt-3 py-2 mb-2">
+                        <i class="fas fa-medal me-1"></i>Rank: <strong id="resultRank">#1</strong>
+                    </div>
+                    <p id="resultMessage" class="small mt-2 mb-0"></p>
+                </div>
+                <div class="modal-footer flex-column border-0 p-3 gap-2">
+                    <a href="/Home/Leaderboard" class="btn btn-success w-100">
+                        <i class="fas fa-trophy me-2"></i>View Leaderboard
+                    </a>
+                    <a href="/" class="btn btn-outline-secondary w-100">
+                        <i class="fas fa-home me-2"></i>Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="text-center py-4">
+        <div class="spinner-border text-success" style="width: 2.5rem; height: 2.5rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2 small">Loading questions...</p>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let streak = 0;
+        let maxStreak = 0;
+        let questionTimer = null;
+        let timeLeft = 10;
+        let answers = [];
+        let startTime = null;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let timeoutCount = 0;
+
+        const correctMessages = [
+            { icon: '🎉', text: 'Excellent!', subtext: 'You nailed it!' },
+            { icon: '🔥', text: 'On Fire!', subtext: 'Keep it going!' },
+            { icon: '⭐', text: 'Brilliant!', subtext: 'You\'re a star!' },
+            { icon: '🚀', text: 'Awesome!', subtext: 'Rocketing to success!' },
+            { icon: '💪', text: 'Perfect!', subtext: 'You\'re unstoppable!' },
+            { icon: '🏆', text: 'Champion!', subtext: 'That was impressive!' },
+            { icon: '✨', text: 'Spectacular!', subtext: 'Simply amazing!' },
+            { icon: '🎯', text: 'Bullseye!', subtext: 'Right on target!' }
+        ];
+
+        const wrongMessages = [
+            { icon: '😅', text: 'Oops!', subtext: 'Better luck next time!' },
+            { icon: '🤔', text: 'Not Quite!', subtext: 'Keep trying!' },
+            { icon: '💭', text: 'Close!', subtext: 'You\'ll get the next one!' },
+            { icon: '📚', text: 'Learn & Grow!', subtext: 'Every mistake is a lesson!' }
+        ];
+
+        const timeoutMessages = [
+            { icon: '⏰', text: 'Time\'s Up!', subtext: 'Be quicker next time!' },
+            { icon: '⌛', text: 'Too Slow!', subtext: 'Speed up!' }
+        ];
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = JSON.parse(localStorage.getItem('quizUser') || 'null');
+            
+            if (!user) {
+                document.getElementById('loading').classList.add('d-none');
+                document.getElementById('loginRequired').classList.remove('d-none');
+                return;
+            }
+
+            await loadQuestions();
+        });
+
+        async function loadQuestions() {
+            try {
+                const response = await fetch('/api/quiz/questions');
+                if (!response.ok) throw new Error('Failed to load questions');
+                
+                questions = await response.json();
+                initializeProgressDots();
+                
+                document.getElementById('loading').classList.add('d-none');
+                document.getElementById('startScreen').classList.remove('d-none');
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                document.getElementById('loading').innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        Failed to load questions. Please refresh the page.
+                    </div>
+                `;
+            }
+        }
+
+        function initializeProgressDots() {
+            const container = document.getElementById('progressDots');
+            container.innerHTML = '';
+            for (let i = 0; i < questions.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'progress-dot';
+                dot.id = `dot-${i}`;
+                container.appendChild(dot);
+            }
+        }
+
+        function startQuiz() {
+            document.getElementById('startScreen').classList.add('d-none');
+            document.getElementById('quizContainer').classList.remove('d-none');
+            startTime = new Date();
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                endQuiz();
+                return;
+            }
+
+            const question = questions[currentQuestionIndex];
+            
+            // Update UI
+            document.getElementById('questionNumber').textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            document.getElementById('questionText').textContent = question.questionText;
+            document.getElementById('optionAText').textContent = question.optionA;
+            document.getElementById('optionBText').textContent = question.optionB;
+            document.getElementById('optionCText').textContent = question.optionC;
+            document.getElementById('currentScore').textContent = score;
+
+            // Update progress dots
+            document.querySelectorAll('.progress-dot').forEach((dot, i) => {
+                dot.classList.remove('current');
+                if (i === currentQuestionIndex) {
+                    dot.classList.add('current');
+                }
+            });
+
+            // Reset options
+            const options = document.querySelectorAll('.option-btn');
+            options.forEach(btn => {
+                btn.disabled = false;
+                btn.classList.remove('option-correct', 'option-wrong');
+            });
+
+            // Update streak badge
+            if (streak >= 2) {
+                document.getElementById('streakBadge').classList.remove('d-none');
+                document.getElementById('streakCount').textContent = streak;
+            } else {
+                document.getElementById('streakBadge').classList.add('d-none');
+            }
+
+            // Start timer
+            startQuestionTimer();
+        }
+
+        function startQuestionTimer() {
+            timeLeft = 10;
+            updateTimerDisplay();
+            
+            questionTimer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(questionTimer);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const timerCircle = document.getElementById('timerCircle');
+            document.getElementById('questionTimer').textContent = timeLeft;
+            
+            timerCircle.classList.remove('timer-normal', 'timer-warning', 'timer-danger');
+            
+            if (timeLeft > 5) {
+                timerCircle.classList.add('timer-normal');
+            } else if (timeLeft > 3) {
+                timerCircle.classList.add('timer-warning');
+            } else {
+                timerCircle.classList.add('timer-danger');
+            }
+        }
+
+        function selectAnswer(answer) {
+            clearInterval(questionTimer);
+            
+            const question = questions[currentQuestionIndex];
+            const isCorrect = answer === question.correctAnswer;
+            
+            // Disable all options
+            const options = document.querySelectorAll('.option-btn');
+            options.forEach(btn => btn.disabled = true);
+            
+            // Highlight correct and wrong answers
+            document.getElementById(`option${question.correctAnswer}`).classList.add('option-correct');
+            if (!isCorrect) {
+                document.getElementById(`option${answer}`).classList.add('option-wrong');
+            }
+
+            // Record answer
+            answers.push({
+                questionId: question.id,
+                selectedAnswer: answer
+            });
+
+            // Update progress dot
+            const dot = document.getElementById(`dot-${currentQuestionIndex}`);
+            dot.classList.remove('current');
+            dot.classList.add(isCorrect ? 'correct' : 'wrong');
+
+            if (isCorrect) {
+                score++;
+                streak++;
+                correctCount++;
+                if (streak > maxStreak) maxStreak = streak;
+                showFeedback('correct');
+                if (streak >= 3) createConfetti();
+            } else {
+                streak = 0;
+                wrongCount++;
+                showFeedback('wrong');
+            }
+        }
+
+        function handleTimeout() {
+            const question = questions[currentQuestionIndex];
+            
+            // Disable all options
+            const options = document.querySelectorAll('.option-btn');
+            options.forEach(btn => btn.disabled = true);
+            
+            // Highlight correct answer
+            document.getElementById(`option${question.correctAnswer}`).classList.add('option-correct');
+
+            // Record as unanswered
+            answers.push({
+                questionId: question.id,
+                selectedAnswer: ''
+            });
+
+            // Update progress dot
+            const dot = document.getElementById(`dot-${currentQuestionIndex}`);
+            dot.classList.remove('current');
+            dot.classList.add('skipped');
+
+            streak = 0;
+            timeoutCount++;
+            showFeedback('timeout');
+        }
+
+        function showFeedback(type) {
+            const overlay = document.getElementById('feedbackOverlay');
+            const icon = document.getElementById('feedbackIcon');
+            const text = document.getElementById('feedbackText');
+            const subtext = document.getElementById('feedbackSubtext');
+
+            let feedback;
+            overlay.classList.remove('feedback-correct', 'feedback-wrong', 'feedback-timeout');
+
+            if (type === 'correct') {
+                feedback = correctMessages[Math.floor(Math.random() * correctMessages.length)];
+                overlay.classList.add('feedback-correct');
+            } else if (type === 'wrong') {
+                feedback = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+                overlay.classList.add('feedback-wrong');
+            } else {
+                feedback = timeoutMessages[Math.floor(Math.random() * timeoutMessages.length)];
+                overlay.classList.add('feedback-timeout');
+            }
+
+            icon.textContent = feedback.icon;
+            text.textContent = feedback.text;
+            subtext.textContent = feedback.subtext;
+
+            overlay.classList.remove('d-none');
+
+            setTimeout(() => {
+                overlay.classList.add('d-none');
+                currentQuestionIndex++;
+                showQuestion();
+            }, 1500);
+        }
+
+        function createConfetti() {
+            const colors = ['#198754', '#ffc107', '#0dcaf0', '#dc3545', '#6f42c1', '#fd7e14'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-piece';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 2500);
+            }
+        }
+
+        async function endQuiz() {
+            const timeTaken = Math.floor((new Date() - startTime) / 1000);
+            const user = JSON.parse(localStorage.getItem('quizUser'));
+
+            try {
+                const response = await fetch('/api/quiz/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId: user.id,
+                        answers: answers,
+                        timeTakenSeconds: timeTaken
+                    })
+                });
+
+                const result = await response.json();
+                showResults(result);
+            } catch (error) {
+                console.error('Error submitting quiz:', error);
+                alert('Failed to submit quiz. Please try again.');
+            }
+        }
+
+        function showResults(result) {
+            document.getElementById('quizContainer').classList.add('d-none');
+
+            // Update result modal
+            let resultIcon = '';
+            if (result.percentage >= 90) {
+                resultIcon = '<i class="fas fa-crown text-warning" style="font-size: 5rem;"></i>';
+            } else if (result.percentage >= 70) {
+                resultIcon = '<i class="fas fa-medal text-success" style="font-size: 5rem;"></i>';
+            } else if (result.percentage >= 50) {
+                resultIcon = '<i class="fas fa-thumbs-up text-info" style="font-size: 5rem;"></i>';
+            } else {
+                resultIcon = '<i class="fas fa-book text-secondary" style="font-size: 5rem;"></i>';
+            }
+
+            document.getElementById('resultIcon').innerHTML = resultIcon;
+            document.getElementById('resultScore').textContent = result.score;
+            document.getElementById('correctCount').textContent = correctCount;
+            document.getElementById('wrongCount').textContent = wrongCount;
+            document.getElementById('timeoutCount').textContent = timeoutCount;
+            document.getElementById('resultRank').textContent = `#${result.rank}`;
+            document.getElementById('resultMessage').textContent = result.message;
+
+            const modal = new bootstrap.Modal(document.getElementById('resultModal'));
+            modal.show();
+
+            if (result.percentage >= 70) {
+                createConfetti();
+            }
+        }
+    </script>
+}

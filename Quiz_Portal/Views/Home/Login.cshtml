@@ -1,0 +1,91 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container py-3 py-md-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5">
+            <div class="text-center mb-4">
+                <i class="fas fa-sign-in-alt text-success" style="font-size: 3rem;"></i>
+                <h2 class="mt-2 fw-bold">Welcome Back</h2>
+                <p class="text-muted small">Login to continue your quiz</p>
+            </div>
+
+            <div class="card shadow border-0">
+                <div class="card-body p-4">
+                    <form id="loginForm" onsubmit="handleLogin(event)">
+                        <div class="mb-4">
+                            <label for="phoneNumber" class="form-label fw-semibold">Phone Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-success text-white fw-bold">+880</span>
+                                <input type="tel" class="form-control form-control-lg" id="phoneNumber" 
+                                       placeholder="1XXXXXXXXX" required pattern="^\d{10}$" maxlength="10"
+                                       autocomplete="tel" inputmode="numeric">
+                            </div>
+                            <div class="form-text small">Enter your 10 digit registered phone number</div>
+                        </div>
+                        <div id="loginError" class="alert alert-danger d-none py-2"></div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg" id="loginBtn">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login
+                            </button>
+                        </div>
+                    </form>
+                    <hr class="my-3">
+                    <div class="text-center">
+                        <p class="mb-0 small">Don't have an account? <a href="/Home/SignUp" class="text-success fw-semibold">Sign up here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('quizUser') || 'null');
+            if (user) {
+                window.location.href = '/Home/Quiz';
+            }
+        });
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const loginBtn = document.getElementById('loginBtn');
+            const loginError = document.getElementById('loginError');
+            
+            loginError.classList.add('d-none');
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Please wait...';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ phoneNumber })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    localStorage.setItem('quizUser', JSON.stringify(data.user));
+                    window.location.href = '/Home/Quiz';
+                } else {
+                    loginError.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>' + (data.message || 'Login failed. Please try again.');
+                    loginError.classList.remove('d-none');
+                }
+            } catch (error) {
+                loginError.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>An error occurred. Please try again.';
+                loginError.classList.remove('d-none');
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Login';
+            }
+        }
+    </script>
+}
