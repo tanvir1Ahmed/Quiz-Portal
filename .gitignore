@@ -1,0 +1,106 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Rider
+.idea/
+
+# User-specific files
+*.user
+*.suo
+*.userprefs
+*.usertasks
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET
+ScaffoldingReadMe.txt
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# SQLite database files
+*.db
+*.db-shm
+*.db-wal
+
+# Secrets and environment files
+appsettings.*.local.json
+secrets.json
+.env
+.env.*
+!.env.example
+
+# Publish output
+[Pp]ublish/
+publish/
+
+# Test results
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+
+# NCrunch
+*.ncrunch*
+_NCrunch_*
+
+# JetBrains Rider
+*.sln.iml
+
+# Code coverage
+coverage*/
+*.lcov
+
+# Misc
+*.tmp
+*.temp
+*.log
+*.cache
+!*.cache/
+*.bak
+
+# Windows
+*.exe
+*.dll
+*.pdb

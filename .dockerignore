@@ -1,0 +1,55 @@
+# Git
+.git
+.gitignore
+
+# Build outputs
+**/bin/
+**/obj/
+**/out/
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# User-specific files
+*.rsuser
+*.user
+*.userosscache
+*.sln.docstates
+
+# NuGet
+**/packages/
+*.nupkg
+
+# Test results
+**/TestResults/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Database files (we'll create fresh in container)
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+logs/
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Documentation
+*.md
+LICENSE
+
+# Misc
+*.tmp
+*.temp

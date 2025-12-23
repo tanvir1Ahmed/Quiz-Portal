@@ -6,10 +6,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Get database path - use /app/data for Docker/Render, otherwise current directory
+var dbPath = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"
+    ? "/app/data/QuizPortal.db"
+    : "QuizPortal.db";
+
 // Add SQLite database
 builder.Services.AddDbContext<QuizDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") 
-        ?? "Data Source=QuizPortal.db"));
+    options.UseSqlite($"Data Source={dbPath}"));
 
 var app = builder.Build();
 

@@ -1,0 +1,19 @@
+# Render Blueprint specification
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: quiz-portal
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+    healthCheckPath: /
+    disk:
+      name: quiz-data
+      mountPath: /app/data
+      sizeGB: 1
