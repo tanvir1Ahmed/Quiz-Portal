@@ -39,8 +39,8 @@
         <div class="col-12 col-lg-10">
             <div class="text-center mb-3 mb-md-4">
                 <i class="fas fa-trophy text-warning" style="font-size: 2.5rem;"></i>
-                <h1 class="fw-bold mt-2" style="font-size: 1.5rem;">Leaderboard</h1>
-                <p class="text-muted small mb-0">Top performers in Bangladesh Quiz</p>
+                <h1 class="fw-bold mt-2" style="font-size: 1.5rem;" data-translate="leaderboardTitle">Leaderboard</h1>
+                <p class="text-muted small mb-0" data-translate="topPerformers">Top performers in Bangladesh Quiz</p>
             </div>
 
             <!-- User Rank Card -->
@@ -50,7 +50,7 @@
                         <div class="d-flex align-items-center">
                             <div class="text-center me-3">
                                 <div class="h4 fw-bold text-success mb-0" id="myRank">#0</div>
-                                <small class="text-muted" style="font-size: 0.7rem;">Your Rank</small>
+                                <small class="text-muted" style="font-size: 0.7rem;" data-translate="yourRank">Your Rank</small>
                             </div>
                             <div>
                                 <h6 class="mb-0" id="myName">-</h6>
@@ -68,7 +68,7 @@
             <!-- Leaderboard List (Mobile-Friendly) -->
             <div class="card shadow-sm">
                 <div class="card-header bg-success text-white py-2">
-                    <h6 class="mb-0"><i class="fas fa-list-ol me-2"></i>Top 50</h6>
+                    <h6 class="mb-0"><i class="fas fa-list-ol me-2"></i><span data-translate="top50">Top 50</span></h6>
                 </div>
                 <div class="card-body p-0">
                     <div id="leaderboardList">
@@ -76,7 +76,7 @@
                             <div class="spinner-border text-success" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
-                            <p class="mt-2 mb-0 small">Loading leaderboard...</p>
+                            <p class="mt-2 mb-0 small" data-translate="loadingLeaderboard">Loading leaderboard...</p>
                         </div>
                     </div>
                 </div>
@@ -84,9 +84,9 @@
 
             <!-- Take Quiz CTA -->
             <div class="text-center mt-4">
-                <p class="text-muted small mb-2">Want to see your name here?</p>
+                <p class="text-muted small mb-2" data-translate="wantToSeeHere">Want to see your name here?</p>
                 <a href="/Home/Quiz" class="btn btn-success">
-                    <i class="fas fa-play me-2"></i>Take the Quiz
+                    <i class="fas fa-play me-2"></i><span data-translate="takeQuiz">Take the Quiz</span>
                 </a>
             </div>
         </div>
@@ -112,7 +112,7 @@
                 document.getElementById('leaderboardList').innerHTML = `
                     <div class="text-center py-4 text-danger">
                         <i class="fas fa-exclamation-circle me-2"></i>
-                        <p class="mb-0 small">Failed to load. Please refresh.</p>
+                        <p class="mb-0 small">${t('failedToLoad')}</p>
                     </div>
                 `;
             }
@@ -148,7 +148,7 @@
                 container.innerHTML = `
                     <div class="text-center py-4">
                         <i class="fas fa-info-circle text-muted" style="font-size: 2rem;"></i>
-                        <p class="mt-2 mb-0 text-muted small">No results yet. Be the first!</p>
+                        <p class="mt-2 mb-0 text-muted small">${t('noResultsYet')}</p>
                     </div>
                 `;
                 return;
@@ -196,5 +196,10 @@
             div.textContent = text;
             return div.innerHTML;
         }
+
+        // Listen for language changes
+        window.addEventListener('languageChanged', function() {
+            loadLeaderboard();
+        });
     </script>
 }

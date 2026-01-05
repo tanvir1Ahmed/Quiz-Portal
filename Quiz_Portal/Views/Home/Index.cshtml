@@ -13,14 +13,14 @@
             <!-- Get Started Section -->
             <div id="getStartedSection" class="card shadow border-0 mb-4">
                 <div class="card-body p-4">
-                    <h3 class="card-title mb-3"><i class="fas fa-rocket me-2"></i>Get Started</h3>
-                    <p class="text-muted mb-4 small">Join now and test your knowledge!</p>
+                    <h3 class="card-title mb-3"><i class="fas fa-rocket me-2"></i><span data-translate="getStarted">Get Started</span></h3>
+                    <p class="text-muted mb-4 small" data-translate="joinNow">Join now and test your knowledge!</p>
                     <div class="d-grid gap-3">
                         <a href="/Home/SignUp" class="btn btn-success btn-lg">
-                            <i class="fas fa-user-plus me-2"></i>Sign Up
+                            <i class="fas fa-user-plus me-2"></i><span data-translate="signUp">Sign Up</span>
                         </a>
                         <a href="/Home/Login" class="btn btn-outline-success btn-lg">
-                            <i class="fas fa-sign-in-alt me-2"></i>Login
+                            <i class="fas fa-sign-in-alt me-2"></i><span data-translate="login">Login</span>
                         </a>
                     </div>
                 </div>
@@ -29,14 +29,14 @@
             <!-- Already Logged In Section -->
             <div id="loggedInSection" class="card shadow border-0 mb-4 d-none">
                 <div class="card-body p-4">
-                    <h3 class="card-title mb-3"><i class="fas fa-user-check me-2 text-success"></i>Welcome Back!</h3>
+                    <h3 class="card-title mb-3"><i class="fas fa-user-check me-2 text-success"></i><span data-translate="welcomeBack">Welcome Back!</span></h3>
                     <p id="welcomeMessage" class="mb-4"></p>
                     <div class="d-grid gap-3">
                         <a href="/Home/Quiz" class="btn btn-success btn-lg">
-                            <i class="fas fa-play me-2"></i>Take Quiz
+                            <i class="fas fa-play me-2"></i><span data-translate="takeQuiz">Take Quiz</span>
                         </a>
                         <a href="/Home/Leaderboard" class="btn btn-outline-success btn-lg">
-                            <i class="fas fa-trophy me-2"></i>View Leaderboard
+                            <i class="fas fa-trophy me-2"></i><span data-translate="viewLeaderboard">View Leaderboard</span>
                         </a>
                     </div>
                 </div>
@@ -50,8 +50,8 @@
                             <div class="text-success mb-2">
                                 <i class="fas fa-question-circle" style="font-size: 2rem;"></i>
                             </div>
-                            <h6 class="card-title mb-1">20 Questions</h6>
-                            <p class="card-text text-muted small d-none d-md-block">Test your knowledge</p>
+                            <h6 class="card-title mb-1" data-translate="questions">20 Questions</h6>
+                            <p class="card-text text-muted small d-none d-md-block" data-translate="testKnowledge">Test your knowledge</p>
                         </div>
                     </div>
                 </div>
@@ -61,8 +61,8 @@
                             <div class="text-success mb-2">
                                 <i class="fas fa-clock" style="font-size: 2rem;"></i>
                             </div>
-                            <h6 class="card-title mb-1">10s Timer</h6>
-                            <p class="card-text text-muted small d-none d-md-block">Per question</p>
+                            <h6 class="card-title mb-1" data-translate="timer">10s Timer</h6>
+                            <p class="card-text text-muted small d-none d-md-block" data-translate="perQuestion">Per question</p>
                         </div>
                     </div>
                 </div>
@@ -72,8 +72,8 @@
                             <div class="text-success mb-2">
                                 <i class="fas fa-trophy" style="font-size: 2rem;"></i>
                             </div>
-                            <h6 class="card-title mb-1">Leaderboard</h6>
-                            <p class="card-text text-muted small d-none d-md-block">Compete & win</p>
+                            <h6 class="card-title mb-1" data-translate="leaderboard">Leaderboard</h6>
+                            <p class="card-text text-muted small d-none d-md-block" data-translate="competeWin">Compete & win</p>
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,19 @@
             if (user) {
                 document.getElementById('getStartedSection').classList.add('d-none');
                 document.getElementById('loggedInSection').classList.remove('d-none');
-                document.getElementById('welcomeMessage').textContent = `Hello, ${user.name}! Ready to test your knowledge?`;
+                updateWelcomeMessage(user.name);
+            }
+        });
+
+        function updateWelcomeMessage(name) {
+            const welcomeMsg = document.getElementById('welcomeMessage');
+            welcomeMsg.textContent = t('readyToTest', { name: name });
+        }
+
+        window.addEventListener('languageChanged', function() {
+            const user = JSON.parse(localStorage.getItem('quizUser') || 'null');
+            if (user) {
+                updateWelcomeMessage(user.name);
             }
         });
     </script>

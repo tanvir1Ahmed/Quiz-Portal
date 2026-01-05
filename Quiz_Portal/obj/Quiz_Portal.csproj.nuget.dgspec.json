@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Md. Tanvir Ahmed\\Git Projects\\Live\\Quiz_Portal\\Quiz_Portal\\Quiz_Portal.csproj": {}
+    "D:\\Md. Tanvir Ahmed\\Git Projects\\Quiz-Portal\\Quiz_Portal\\Quiz_Portal.csproj": {}
   },
   "projects": {
-    "D:\\Md. Tanvir Ahmed\\Git Projects\\Live\\Quiz_Portal\\Quiz_Portal\\Quiz_Portal.csproj": {
+    "D:\\Md. Tanvir Ahmed\\Git Projects\\Quiz-Portal\\Quiz_Portal\\Quiz_Portal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Md. Tanvir Ahmed\\Git Projects\\Live\\Quiz_Portal\\Quiz_Portal\\Quiz_Portal.csproj",
+        "projectUniqueName": "D:\\Md. Tanvir Ahmed\\Git Projects\\Quiz-Portal\\Quiz_Portal\\Quiz_Portal.csproj",
         "projectName": "Quiz_Portal",
-        "projectPath": "D:\\Md. Tanvir Ahmed\\Git Projects\\Live\\Quiz_Portal\\Quiz_Portal\\Quiz_Portal.csproj",
+        "projectPath": "D:\\Md. Tanvir Ahmed\\Git Projects\\Quiz-Portal\\Quiz_Portal\\Quiz_Portal.csproj",
         "packagesPath": "C:\\Users\\developer1\\.nuget\\packages\\",
-        "outputPath": "D:\\Md. Tanvir Ahmed\\Git Projects\\Live\\Quiz_Portal\\Quiz_Portal\\obj\\",
+        "outputPath": "D:\\Md. Tanvir Ahmed\\Git Projects\\Quiz-Portal\\Quiz_Portal\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

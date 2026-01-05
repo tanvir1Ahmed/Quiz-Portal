@@ -285,10 +285,10 @@
         <div class="col-12 col-md-8 col-lg-6">
             <div class="alert alert-warning text-center p-4">
                 <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
-                <h5>Login Required</h5>
-                <p class="small mb-3">Please login to take the quiz.</p>
+                <h5 data-translate="loginRequired">Login Required</h5>
+                <p class="small mb-3" data-translate="pleaseLogin">Please login to take the quiz.</p>
                 <a href="/" class="btn btn-success">
-                    <i class="fas fa-sign-in-alt me-2"></i>Go to Login
+                    <i class="fas fa-sign-in-alt me-2"></i><span data-translate="goToLogin">Go to Login</span>
                 </a>
             </div>
         </div>
@@ -300,18 +300,18 @@
             <div class="start-icon">
                 <i class="fas fa-flag"></i>
             </div>
-            <h1 class="fw-bold text-success mb-2" style="font-size: 1.5rem;">Quiz Master</h1>
-            <p class="text-muted mb-3">Test your knowledge with 20 questions!</p>
+            <h1 class="fw-bold text-success mb-2" style="font-size: 1.5rem;" data-translate="quizMaster">Quiz Master</h1>
+            <p class="text-muted mb-3" data-translate="testKnowledge20">Test your knowledge with 20 questions!</p>
             <div class="mb-4 d-flex flex-wrap justify-content-center gap-2">
                 <span class="badge bg-warning text-dark p-2">
-                    <i class="fas fa-clock me-1"></i>10s per question
+                    <i class="fas fa-clock me-1"></i><span data-translate="perQuestionBadge">10s per question</span>
                 </span>
                 <span class="badge bg-info text-white p-2">
-                    <i class="fas fa-trophy me-1"></i>Compete & win
+                    <i class="fas fa-trophy me-1"></i><span data-translate="competeWinBadge">Compete & win</span>
                 </span>
             </div>
             <button class="btn btn-success btn-lg px-4 py-3" onclick="startQuiz()">
-                <i class="fas fa-play me-2"></i>Start Quiz
+                <i class="fas fa-play me-2"></i><span data-translate="startQuiz">Start Quiz</span>
             </button>
         </div>
     </div>
@@ -378,46 +378,46 @@
         <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
             <div class="modal-content border-0">
                 <div class="modal-header bg-success text-white py-2">
-                    <h6 class="modal-title"><i class="fas fa-trophy me-2"></i>Quiz Complete!</h6>
+                    <h6 class="modal-title"><i class="fas fa-trophy me-2"></i><span data-translate="quizComplete">Quiz Complete!</span></h6>
                 </div>
                 <div class="modal-body text-center p-3 p-md-4">
                     <div id="resultIcon" class="mb-2"></div>
                     <h1 id="resultScore" class="display-4 fw-bold text-success mb-1"></h1>
-                    <p class="text-muted">out of 20 correct</p>
+                    <p class="text-muted" data-translate="outOf20">out of 20 correct</p>
                     <div class="row g-2 mt-3">
                         <div class="col-4">
                             <div class="p-2 bg-light rounded">
                                 <i class="fas fa-check-circle text-success fa-lg mb-1"></i>
                                 <h5 id="correctCount" class="mb-0">0</h5>
-                                <small class="text-muted" style="font-size: 0.7rem;">Correct</small>
+                                <small class="text-muted" style="font-size: 0.7rem;" data-translate="correct">Correct</small>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="p-2 bg-light rounded">
                                 <i class="fas fa-times-circle text-danger fa-lg mb-1"></i>
                                 <h5 id="wrongCount" class="mb-0">0</h5>
-                                <small class="text-muted" style="font-size: 0.7rem;">Wrong</small>
+                                <small class="text-muted" style="font-size: 0.7rem;" data-translate="wrong">Wrong</small>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="p-2 bg-light rounded">
                                 <i class="fas fa-clock text-warning fa-lg mb-1"></i>
                                 <h5 id="timeoutCount" class="mb-0">0</h5>
-                                <small class="text-muted" style="font-size: 0.7rem;">Timeout</small>
+                                <small class="text-muted" style="font-size: 0.7rem;" data-translate="timeout">Timeout</small>
                             </div>
                         </div>
                     </div>
                     <div class="alert alert-info mt-3 py-2 mb-2">
-                        <i class="fas fa-medal me-1"></i>Rank: <strong id="resultRank">#1</strong>
+                        <i class="fas fa-medal me-1"></i><span data-translate="rank">Rank</span>: <strong id="resultRank">#1</strong>
                     </div>
                     <p id="resultMessage" class="small mt-2 mb-0"></p>
                 </div>
                 <div class="modal-footer flex-column border-0 p-3 gap-2">
                     <a href="/Home/Leaderboard" class="btn btn-success w-100">
-                        <i class="fas fa-trophy me-2"></i>View Leaderboard
+                        <i class="fas fa-trophy me-2"></i><span data-translate="viewLeaderboard">View Leaderboard</span>
                     </a>
                     <a href="/" class="btn btn-outline-secondary w-100">
-                        <i class="fas fa-home me-2"></i>Home
+                        <i class="fas fa-home me-2"></i><span data-translate="home">Home</span>
                     </a>
                 </div>
             </div>
@@ -429,7 +429,7 @@
         <div class="spinner-border text-success" style="width: 2.5rem; height: 2.5rem;" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
-        <p class="mt-2 small">Loading questions...</p>
+        <p class="mt-2 small" data-translate="loadingQuestions">Loading questions...</p>
     </div>
 </div>
 
@@ -448,28 +448,34 @@
         let wrongCount = 0;
         let timeoutCount = 0;
 
-        const correctMessages = [
-            { icon: '🎉', text: 'Excellent!', subtext: 'You nailed it!' },
-            { icon: '🔥', text: 'On Fire!', subtext: 'Keep it going!' },
-            { icon: '⭐', text: 'Brilliant!', subtext: 'You\'re a star!' },
-            { icon: '🚀', text: 'Awesome!', subtext: 'Rocketing to success!' },
-            { icon: '💪', text: 'Perfect!', subtext: 'You\'re unstoppable!' },
-            { icon: '🏆', text: 'Champion!', subtext: 'That was impressive!' },
-            { icon: '✨', text: 'Spectacular!', subtext: 'Simply amazing!' },
-            { icon: '🎯', text: 'Bullseye!', subtext: 'Right on target!' }
-        ];
+        function getCorrectMessages() {
+            return [
+                { icon: '🎉', text: t('excellent'), subtext: t('youNailedIt') },
+                { icon: '🔥', text: t('onFire'), subtext: t('keepGoing') },
+                { icon: '⭐', text: t('brilliant'), subtext: t('youreStar') },
+                { icon: '🚀', text: t('awesome'), subtext: t('rocketing') },
+                { icon: '💪', text: t('perfect'), subtext: t('unstoppable') },
+                { icon: '🏆', text: t('champion'), subtext: t('impressive') },
+                { icon: '✨', text: t('spectacular'), subtext: t('simplyAmazing') },
+                { icon: '🎯', text: t('bullseye'), subtext: t('rightOnTarget') }
+            ];
+        }
 
-        const wrongMessages = [
-            { icon: '😅', text: 'Oops!', subtext: 'Better luck next time!' },
-            { icon: '🤔', text: 'Not Quite!', subtext: 'Keep trying!' },
-            { icon: '💭', text: 'Close!', subtext: 'You\'ll get the next one!' },
-            { icon: '📚', text: 'Learn & Grow!', subtext: 'Every mistake is a lesson!' }
-        ];
+        function getWrongMessages() {
+            return [
+                { icon: '😅', text: t('oops'), subtext: t('betterLuck') },
+                { icon: '🤔', text: t('notQuite'), subtext: t('keepTrying') },
+                { icon: '💭', text: t('close'), subtext: t('getNextOne') },
+                { icon: '📚', text: t('learnGrow'), subtext: t('mistakeLesson') }
+            ];
+        }
 
-        const timeoutMessages = [
-            { icon: '⏰', text: 'Time\'s Up!', subtext: 'Be quicker next time!' },
-            { icon: '⌛', text: 'Too Slow!', subtext: 'Speed up!' }
-        ];
+        function getTimeoutMessages() {
+            return [
+                { icon: '⏰', text: t('timesUp'), subtext: t('beQuicker') },
+                { icon: '⌛', text: t('tooSlow'), subtext: t('speedUp') }
+            ];
+        }
 
         document.addEventListener('DOMContentLoaded', async function() {
             const user = JSON.parse(localStorage.getItem('quizUser') || 'null');
@@ -498,7 +504,7 @@
                 document.getElementById('loading').innerHTML = `
                     <div class="alert alert-danger">
                         <i class="fas fa-exclamation-circle me-2"></i>
-                        Failed to load questions. Please refresh the page.
+                        ${t('failedLoadQuestions')}
                     </div>
                 `;
             }
@@ -529,13 +535,14 @@
             }
 
             const question = questions[currentQuestionIndex];
+            const translatedQuestion = getTranslatedQuestion(question);
             
             // Update UI
-            document.getElementById('questionNumber').textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
-            document.getElementById('questionText').textContent = question.questionText;
-            document.getElementById('optionAText').textContent = question.optionA;
-            document.getElementById('optionBText').textContent = question.optionB;
-            document.getElementById('optionCText').textContent = question.optionC;
+            document.getElementById('questionNumber').textContent = t('questionOf', { current: currentQuestionIndex + 1, total: questions.length });
+            document.getElementById('questionText').textContent = translatedQuestion.questionText;
+            document.getElementById('optionAText').textContent = translatedQuestion.optionA;
+            document.getElementById('optionBText').textContent = translatedQuestion.optionB;
+            document.getElementById('optionCText').textContent = translatedQuestion.optionC;
             document.getElementById('currentScore').textContent = score;
 
             // Update progress dots
@@ -669,16 +676,20 @@
             const subtext = document.getElementById('feedbackSubtext');
 
             let feedback;
+            let messages;
             overlay.classList.remove('feedback-correct', 'feedback-wrong', 'feedback-timeout');
 
             if (type === 'correct') {
-                feedback = correctMessages[Math.floor(Math.random() * correctMessages.length)];
+                messages = getCorrectMessages();
+                feedback = messages[Math.floor(Math.random() * messages.length)];
                 overlay.classList.add('feedback-correct');
             } else if (type === 'wrong') {
-                feedback = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+                messages = getWrongMessages();
+                feedback = messages[Math.floor(Math.random() * messages.length)];
                 overlay.classList.add('feedback-wrong');
             } else {
-                feedback = timeoutMessages[Math.floor(Math.random() * timeoutMessages.length)];
+                messages = getTimeoutMessages();
+                feedback = messages[Math.floor(Math.random() * messages.length)];
                 overlay.classList.add('feedback-timeout');
             }
 

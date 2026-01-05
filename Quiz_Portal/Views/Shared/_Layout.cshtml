@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
@@ -29,21 +29,26 @@
                     <ul class="navbar-nav flex-grow-1 py-2 py-lg-0">
                         <li class="nav-item">
                             <a class="nav-link rounded-3 mb-1 mb-lg-0" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-home me-2"></i>Home
+                                <i class="fas fa-home me-2"></i><span data-translate="home">Home</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link rounded-3 mb-1 mb-lg-0" asp-area="" asp-controller="Home" asp-action="Quiz">
-                                <i class="fas fa-question-circle me-2"></i>Quiz
+                                <i class="fas fa-question-circle me-2"></i><span data-translate="quiz">Quiz</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link rounded-3 mb-1 mb-lg-0" asp-area="" asp-controller="Home" asp-action="Leaderboard">
-                                <i class="fas fa-trophy me-2"></i>Leaderboard
+                                <i class="fas fa-trophy me-2"></i><span data-translate="leaderboard">Leaderboard</span>
                             </a>
                         </li>
                     </ul>
                     <ul class="navbar-nav border-top border-light border-opacity-25 pt-2 mt-2 pt-lg-0 mt-lg-0 border-lg-0">
+                        <li class="nav-item">
+                            <button class="nav-link rounded-3 btn btn-link text-white" id="langToggleBtn" onclick="toggleLanguage()">
+                                <i class="fas fa-language me-1"></i>العربية
+                            </button>
+                        </li>
                         <li class="nav-item" id="userInfo" style="display: none;">
                             <span class="nav-link">
                                 <i class="fas fa-user-circle me-2"></i><span id="userName"></span>
@@ -51,17 +56,17 @@
                         </li>
                         <li class="nav-item" id="logoutBtn" style="display: none;">
                             <a class="nav-link rounded-3 text-warning" href="#" onclick="logout()">
-                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                <i class="fas fa-sign-out-alt me-2"></i><span data-translate="logout">Logout</span>
                             </a>
                         </li>
                         <li class="nav-item" id="signupLink">
                             <a class="nav-link rounded-3 mb-1 mb-lg-0" asp-area="" asp-controller="Home" asp-action="SignUp">
-                                <i class="fas fa-user-plus me-2"></i>Sign Up
+                                <i class="fas fa-user-plus me-2"></i><span data-translate="signUp">Sign Up</span>
                             </a>
                         </li>
                         <li class="nav-item" id="loginLink">
                             <a class="nav-link rounded-3" asp-area="" asp-controller="Home" asp-action="Login">
-                                <i class="fas fa-sign-in-alt me-2"></i>Login
+                                <i class="fas fa-sign-in-alt me-2"></i><span data-translate="login">Login</span>
                             </a>
                         </li>
                     </ul>
@@ -77,11 +82,13 @@
 
     <footer class="border-top footer text-muted mt-2">
         <div class="container text-center py-1">
-            <p class="mb-0" style="font-size: 0.7rem;">&copy; 2025 - Quiz Master</p>
+            <p class="mb-0" style="font-size: 0.7rem;" data-translate="copyright">&copy; 2026 - Quiz Master</p>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/translations.js" asp-append-version="true"></script>
+    <script src="~/js/questionTranslations.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
         // Check if user is logged in

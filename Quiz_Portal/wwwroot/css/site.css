@@ -244,3 +244,134 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #146c43;
 }
+
+/* RTL Support for Arabic */
+html[dir="rtl"] {
+  direction: rtl;
+}
+
+html[dir="rtl"] body {
+  text-align: right;
+}
+
+html[dir="rtl"] .me-1,
+html[dir="rtl"] .me-2,
+html[dir="rtl"] .me-3 {
+  margin-right: 0 !important;
+  margin-left: 0.25rem !important;
+}
+
+html[dir="rtl"] .me-2 {
+  margin-left: 0.5rem !important;
+}
+
+html[dir="rtl"] .me-3 {
+  margin-left: 1rem !important;
+}
+
+html[dir="rtl"] .ms-1,
+html[dir="rtl"] .ms-2,
+html[dir="rtl"] .ms-3 {
+  margin-left: 0 !important;
+  margin-right: 0.25rem !important;
+}
+
+html[dir="rtl"] .ms-2 {
+  margin-right: 0.5rem !important;
+}
+
+html[dir="rtl"] .ms-3 {
+  margin-right: 1rem !important;
+}
+
+html[dir="rtl"] .text-start {
+  text-align: right !important;
+}
+
+html[dir="rtl"] .text-end {
+  text-align: left !important;
+}
+
+html[dir="rtl"] .navbar-brand {
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+html[dir="rtl"] .input-group > .input-group-text:first-child {
+  border-radius: 0 0.375rem 0.375rem 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+html[dir="rtl"] .input-group > .form-control:last-child {
+  border-radius: 0.375rem 0 0 0.375rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+html[dir="rtl"] .option-btn {
+  text-align: right;
+}
+
+html[dir="rtl"] .leaderboard-item {
+  border-left: none;
+  border-right: 4px solid transparent;
+}
+
+html[dir="rtl"] .leaderboard-item.rank-1 {
+  border-right-color: #ffc107;
+  background: linear-gradient(-90deg, rgba(255,193,7,0.1) 0%, transparent 100%);
+}
+
+html[dir="rtl"] .leaderboard-item.rank-2 {
+  border-right-color: #6c757d;
+  background: linear-gradient(-90deg, rgba(108,117,125,0.1) 0%, transparent 100%);
+}
+
+html[dir="rtl"] .leaderboard-item.rank-3 {
+  border-right-color: #cd7f32;
+  background: linear-gradient(-90deg, rgba(205,127,50,0.1) 0%, transparent 100%);
+}
+
+html[dir="rtl"] .fa-sign-out-alt,
+html[dir="rtl"] .fa-sign-in-alt {
+  transform: scaleX(-1);
+}
+
+html[dir="rtl"] .navbar-collapse {
+  text-align: right;
+}
+
+html[dir="rtl"] .dropdown-menu {
+  text-align: right;
+}
+
+/* Arabic font styling */
+html[dir="rtl"] body {
+  font-family: 'Segoe UI', Tahoma, 'Arial', sans-serif;
+}
+
+html[dir="rtl"] .card-body {
+  text-align: right;
+}
+
+html[dir="rtl"] .d-flex {
+  flex-direction: row;
+}
+
+html[dir="rtl"] .flex-row-reverse {
+  flex-direction: row-reverse !important;
+}
+
+/* Language toggle button styling */
+#langToggleBtn {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+#langToggleBtn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
